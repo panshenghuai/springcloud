@@ -1,0 +1,28 @@
+server:
+  port: 80
+spring:
+  application:
+    name: cloud-consumer-feign-order
+
+#eureka注册中心
+eureka:
+  client:
+    #表示注册进EurekaSer，默认为true
+    register-with-eureka: true
+    #是否从eureka server 抓取已有的注册信息，默认为true单节点无所谓，集群必须设置为true才能配合ribbon使用负载均衡
+    fetch-registry: true
+    service-url:
+      #defaultZone: http://localhost:7001/eureka/
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/
+#设置feign客户端超时时间(OpenFeign默认支持ribbon)
+feign:
+  client:
+    config:
+      app-order:
+        #connectTimeout和readTimeout这两个得一起配置才会生效
+        connectTimeout: 5000
+        readTimeout: 5000
+
+logging:
+  level:
+    com.my.cloud.service.OrderFeignService: debug
